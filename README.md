@@ -1,5 +1,7 @@
 # qcc-sessions-client
 
+Front end of the QCC sessions app
+
 # To do
 
 - [ ] decide on layout of homepage
