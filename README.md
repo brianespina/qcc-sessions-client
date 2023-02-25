@@ -1,6 +1,7 @@
 # qcc-sessions-client
 
 Front end of the QCC sessions app
+Wire frame link https://wireframe.cc/9oDyUf
 
 # To do
 
