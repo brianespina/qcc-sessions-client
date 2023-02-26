@@ -7,9 +7,8 @@ const Sessions = styled.div`
   display: flex;
   gap: 1em;
   margin-block: 20px;
-  @media (max-width: 1020px) {
-    flex-wrap: wrap;
-  }
+  flex-wrap: wrap;
+  justify-content: space-between;
 `;
 
 function App() {

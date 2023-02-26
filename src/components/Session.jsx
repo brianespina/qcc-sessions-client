@@ -4,6 +4,11 @@ const Title = styled.h2`
   font-weight: bold;
 `;
 
+const SessionCard = styled.div`
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  padding: 20px;
+`;
+
 export const Session = ({
   id,
   title,
@@ -15,14 +20,14 @@ export const Session = ({
   notes,
 }) => {
   return (
-    <div className="shadow p-4 flex-auto rounded">
+    <SessionCard>
       <p>{id}</p>
       <Title>{title}</Title>
       <p>{date}</p>
       <p>{status}</p>
       <p>{type}</p>
       <p>{notes}</p>
-    </div>
+    </SessionCard>
   );
 };
 
