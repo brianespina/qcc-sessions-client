@@ -8,10 +8,10 @@ const Sessions = styled.div`
   display: flex;
   gap: 1em;
   margin-block: 20px;
-  flex-wrap: no-wrap;
   justify-content: space-between;
   overflow: hidden;
   padding: 20px;
+  flex-wrap: wrap;
 `;
 
 const Container = styled.section`
@@ -29,6 +29,10 @@ function App() {
     setSessions(response.data);
   };
 
+  const addSessionToState = (session) => {
+    setSessions([...sessions, session]);
+  };
+
   useEffect(() => {
     fetchSessions();
   }, []);
@@ -40,7 +44,7 @@ function App() {
         {sessions &&
           sessions.map((session, i) => <Session key={i} {...session} />)}
       </Sessions>
-      <SessionForm />
+      <SessionForm addSessionToState={addSessionToState} />
     </Container>
   );
 }

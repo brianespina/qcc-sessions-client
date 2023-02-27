@@ -11,7 +11,7 @@ const initialSessionData = {
   notes: "",
 };
 
-const SessionForm = () => {
+const SessionForm = ({ addSessionToState }) => {
   const [sessionData, setSessionData] = useState(initialSessionData);
 
   const handleChange = (e) => {
@@ -30,7 +30,8 @@ const SessionForm = () => {
       "http://localhost:3000/api/v1/sessions",
       sessionData
     );
-    console.log(response);
+    setSessionData(initialSessionData);
+    addSessionToState(response.data[0]);
   };
 
   return (
