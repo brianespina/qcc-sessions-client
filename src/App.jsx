@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import Session from "./components/Session";
+import SessionForm from "./components/SessionForm";
 
 const Sessions = styled.div`
   display: flex;
@@ -39,6 +40,7 @@ function App() {
         {sessions &&
           sessions.map((session, i) => <Session key={i} {...session} />)}
       </Sessions>
+      <SessionForm />
     </Container>
   );
 }
