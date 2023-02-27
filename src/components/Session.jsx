@@ -7,6 +7,10 @@ const Title = styled.h2`
 const SessionCard = styled.div`
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   padding: 20px;
+  flex: auto;
+  flex-basis: 350px;
+  min-width: 350px;
+  width: 100%;
 `;
 
 export const Session = ({

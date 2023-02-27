@@ -7,8 +7,17 @@ const Sessions = styled.div`
   display: flex;
   gap: 1em;
   margin-block: 20px;
-  flex-wrap: wrap;
+  flex-wrap: no-wrap;
   justify-content: space-between;
+  overflow: hidden;
+  padding: 20px;
+`;
+
+const Container = styled.section`
+  max-width: 1024px;
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: 15px;
 `;
 
 function App() {
@@ -24,15 +33,13 @@ function App() {
   }, []);
 
   return (
-    <div className="w-screen h-screen">
-      <div className="container mx-auto p-3">
-        <h1 className="text-3xl font-bold">Sessions</h1>
-        <Sessions>
-          {sessions &&
-            sessions.map((session, i) => <Session key={i} {...session} />)}
-        </Sessions>
-      </div>
-    </div>
+    <Container>
+      <h1 className="text-3xl font-bold">Sessions</h1>
+      <Sessions>
+        {sessions &&
+          sessions.map((session, i) => <Session key={i} {...session} />)}
+      </Sessions>
+    </Container>
   );
 }
 
