@@ -29,8 +29,11 @@ function App() {
     setSessions(response.data);
   };
 
-  const addSessionToState = (session) => {
-    setSessions([...sessions, session]);
+  const deleteSession = async (id) => {
+    const response = await axios.delete(
+      `http://localhost:3000/api/v1/sessions/${id}`
+    );
+    fetchSessions();
   };
 
   useEffect(() => {
@@ -42,9 +45,11 @@ function App() {
       <h1 className="text-3xl font-bold">Sessions</h1>
       <Sessions>
         {sessions &&
-          sessions.map((session, i) => <Session key={i} {...session} />)}
+          sessions.map((session, i) => (
+            <Session key={i} {...session} deleteSession={deleteSession} />
+          ))}
       </Sessions>
-      <SessionForm addSessionToState={addSessionToState} />
+      <SessionForm fetchSessions={fetchSessions} />
     </Container>
   );
 }

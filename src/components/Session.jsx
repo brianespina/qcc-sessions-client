@@ -19,6 +19,7 @@ export const Session = ({
   type,
   handler,
   notes,
+  deleteSession,
 }) => {
   return (
     <SessionCard>
@@ -28,6 +29,13 @@ export const Session = ({
       <p>{status}</p>
       <p>{type}</p>
       <p>{notes}</p>
+      <button
+        onClick={() => {
+          deleteSession(id);
+        }}
+      >
+        delete
+      </button>
     </SessionCard>
   );
 };

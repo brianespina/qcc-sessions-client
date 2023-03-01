@@ -11,7 +11,7 @@ const initialSessionData = {
   notes: "",
 };
 
-const SessionForm = ({ addSessionToState }) => {
+const SessionForm = ({ fetchSessions }) => {
   const [sessionData, setSessionData] = useState(initialSessionData);
 
   const handleChange = (e) => {
@@ -31,7 +31,7 @@ const SessionForm = ({ addSessionToState }) => {
       sessionData
     );
     setSessionData(initialSessionData);
-    addSessionToState(response.data[0]);
+    fetchSessions();
   };
 
   return (
