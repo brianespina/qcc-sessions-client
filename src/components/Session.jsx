@@ -10,17 +10,20 @@ const SessionCard = styled.div`
   flex: auto;
 `;
 
-export const Session = ({
-  id,
-  title,
-  date,
-  attendees,
-  status,
-  type,
-  handler,
-  notes,
-  deleteSession,
-}) => {
+export const Session = (props) => {
+  const {
+    id,
+    title,
+    date,
+    attendees,
+    status,
+    type,
+    handler,
+    notes,
+    deleteSession,
+    editSession,
+  } = props;
+
   return (
     <SessionCard>
       <p>{id}</p>
@@ -34,7 +37,23 @@ export const Session = ({
           deleteSession(id);
         }}
       >
-        delete
+        Delete
+      </button>
+      <button
+        onClick={() => {
+          editSession({
+            id,
+            title,
+            date,
+            attendees,
+            status,
+            type,
+            handler,
+            notes,
+          });
+        }}
+      >
+        Edit
       </button>
     </SessionCard>
   );

@@ -23,6 +23,7 @@ const Container = styled.section`
 
 function App() {
   const [sessions, setSessions] = useState([]);
+  const [isEdit, setIsEdit] = useState(false);
 
   const fetchSessions = async () => {
     const response = await axios.get("http://localhost:3000/api/v1/sessions");
@@ -36,6 +37,15 @@ function App() {
     fetchSessions();
   };
 
+  const editSession = async (data) => {
+    // const response = await axios.put(
+    //   `http://localhost:3000/api/v1/sessions/${id}`,
+    //   data
+    // );
+
+    console.log("edit");
+  };
+
   useEffect(() => {
     fetchSessions();
   }, []);
@@ -46,10 +56,22 @@ function App() {
       <Sessions>
         {sessions &&
           sessions.map((session, i) => (
-            <Session key={i} {...session} deleteSession={deleteSession} />
+            <Session
+              key={i}
+              {...session}
+              deleteSession={deleteSession}
+              editSession={editSession}
+            />
           ))}
       </Sessions>
-      <SessionForm fetchSessions={fetchSessions} />
+      <button
+        onClick={() => {
+          setIsEdit(!isEdit);
+        }}
+      >
+        Edit mode
+      </button>
+      <SessionForm fetchSessions={fetchSessions} isEdit={isEdit} />
     </Container>
   );
 }
