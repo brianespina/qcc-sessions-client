@@ -1,5 +1,4 @@
-import { useState } from "react";
-import axios from "axios";
+import { useState, useEffect } from "react";
 
 const initialSessionFormData = {
   title: "",
@@ -11,8 +10,12 @@ const initialSessionFormData = {
   notes: "",
 };
 
-const SessionForm = ({ fetchSessions, isEdit }) => {
-  const [sessionData, setSessionData] = useState(initialSessionFormData);
+const SessionForm = ({ data = initialSessionFormData, handleSubmit }) => {
+  const [sessionData, setSessionData] = useState(data);
+
+  useEffect(() => {
+    setSessionData(data);
+  }, [data]);
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -24,23 +27,13 @@ const SessionForm = ({ fetchSessions, isEdit }) => {
     });
   };
 
-  if (isEdit) {
-    console.log("edit mode");
-  }
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    let response = await axios.post(
-      "http://localhost:3000/api/v1/sessions",
-      sessionData
-    );
-    setSessionData(initialSessionFormData);
-    fetchSessions();
-  };
-
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form
+        onSubmit={(e) => {
+          handleSubmit(e, sessionData);
+        }}
+      >
         <input
           type="text"
           name="title"
@@ -83,9 +76,7 @@ const SessionForm = ({ fetchSessions, isEdit }) => {
           onChange={handleChange}
         ></textarea>
 
-        <button type="submit">
-          {isEdit ? "Edit Session" : "Create Session"}
-        </button>
+        <button type="submit">Create Section</button>
       </form>
     </>
   );

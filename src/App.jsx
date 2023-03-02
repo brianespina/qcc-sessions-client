@@ -23,7 +23,8 @@ const Container = styled.section`
 
 function App() {
   const [sessions, setSessions] = useState([]);
-  const [isEdit, setIsEdit] = useState(false);
+  const [mode, setMode] = useState("");
+  const [toEdit, setToEdit] = useState({});
 
   const fetchSessions = async () => {
     const response = await axios.get("http://localhost:3000/api/v1/sessions");
@@ -37,13 +38,29 @@ function App() {
     fetchSessions();
   };
 
-  const editSession = async (data) => {
+  const editSession = async (e, sessionData) => {
+    e.preventDefault();
+    console.log(sessionData);
     // const response = await axios.put(
     //   `http://localhost:3000/api/v1/sessions/${id}`,
     //   data
     // );
+  };
 
-    console.log("edit");
+  const addSession = async (e, sessionData) => {
+    e.preventDefault();
+    let response = await axios.post(
+      "http://localhost:3000/api/v1/sessions",
+      sessionData
+    );
+    setMode("");
+    fetchSessions();
+  };
+
+  const openEditForm = (data) => {
+    setMode("edit");
+    console.log(data);
+    setToEdit(data);
   };
 
   useEffect(() => {
@@ -60,18 +77,22 @@ function App() {
               key={i}
               {...session}
               deleteSession={deleteSession}
-              editSession={editSession}
+              openEditForm={openEditForm}
             />
           ))}
       </Sessions>
+      {mode === "add" && <SessionForm handleSubmit={addSession} />}
+      {mode === "edit" && (
+        <SessionForm handleSubmit={editSession} data={toEdit} />
+      )}
+
       <button
         onClick={() => {
-          setIsEdit(!isEdit);
+          setMode("add");
         }}
       >
-        Edit mode
+        Add Session +
       </button>
-      <SessionForm fetchSessions={fetchSessions} isEdit={isEdit} />
     </Container>
   );
 }

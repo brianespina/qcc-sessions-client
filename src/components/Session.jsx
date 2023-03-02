@@ -21,7 +21,7 @@ export const Session = (props) => {
     handler,
     notes,
     deleteSession,
-    editSession,
+    openEditForm,
   } = props;
 
   return (
@@ -41,7 +41,7 @@ export const Session = (props) => {
       </button>
       <button
         onClick={() => {
-          editSession({
+          openEditForm({
             id,
             title,
             date,
