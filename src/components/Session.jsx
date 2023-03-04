@@ -1,4 +1,8 @@
 import styled from "styled-components";
+import { useState } from "react";
+import SessionForm from "./SessionForm";
+import axios from "axios";
+
 const Title = styled.h2`
   font-size: 20px;
   font-weight: bold;
@@ -21,40 +25,48 @@ export const Session = (props) => {
     handler,
     notes,
     deleteSession,
-    openEditForm,
+    editSession,
   } = props;
+
+  const [isEditMode, setIsEditMode] = useState(false);
+
+  const handleEditSubmit = (e, sessionData) => {
+    editSession(e, sessionData);
+    setIsEditMode(false);
+  };
 
   return (
     <SessionCard>
-      <p>{id}</p>
-      <Title>{title}</Title>
-      <p>{date}</p>
-      <p>{status}</p>
-      <p>{type}</p>
-      <p>{notes}</p>
-      <button
-        onClick={() => {
-          deleteSession(id);
-        }}
-      >
-        Delete
-      </button>
-      <button
-        onClick={() => {
-          openEditForm({
-            id,
-            title,
-            date,
-            attendees,
-            status,
-            type,
-            handler,
-            notes,
-          });
-        }}
-      >
-        Edit
-      </button>
+      {isEditMode ? (
+        <SessionForm
+          data={{ id, title, date, attendees, status, type, handler, notes }}
+          handleSubmit={handleEditSubmit}
+          mode="edit"
+        />
+      ) : (
+        <>
+          <p>{id}</p>
+          <Title>{title}</Title>
+          <p>{date}</p>
+          <p>{status}</p>
+          <p>{type}</p>
+          <p>{notes}</p>
+          <button
+            onClick={() => {
+              deleteSession(id);
+            }}
+          >
+            Delete
+          </button>
+          <button
+            onClick={() => {
+              setIsEditMode(true);
+            }}
+          >
+            Edit
+          </button>
+        </>
+      )}
     </SessionCard>
   );
 };

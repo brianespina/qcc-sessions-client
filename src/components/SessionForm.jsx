@@ -10,7 +10,11 @@ const initialSessionFormData = {
   notes: "",
 };
 
-const SessionForm = ({ data = initialSessionFormData, handleSubmit }) => {
+const SessionForm = ({
+  data = initialSessionFormData,
+  handleSubmit,
+  mode = "add",
+}) => {
   const [sessionData, setSessionData] = useState(data);
 
   useEffect(() => {
@@ -76,7 +80,9 @@ const SessionForm = ({ data = initialSessionFormData, handleSubmit }) => {
           onChange={handleChange}
         ></textarea>
 
-        <button type="submit">Create Section</button>
+        <button type="submit">
+          {mode === "edit" ? "Edit Session" : "Create Session"}
+        </button>
       </form>
     </>
   );
