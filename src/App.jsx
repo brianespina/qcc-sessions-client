@@ -3,6 +3,7 @@ import axios from "axios";
 import styled from "styled-components";
 import Session from "./components/Session";
 import SessionForm from "./components/SessionForm";
+import Container from "./components/Container";
 
 const Sessions = styled.div`
   display: flex;
@@ -12,13 +13,6 @@ const Sessions = styled.div`
   overflow: hidden;
   padding: 20px;
   flex-wrap: wrap;
-`;
-
-const Container = styled.section`
-  max-width: 1024px;
-  width: 100%;
-  margin-inline: auto;
-  padding-inline: 15px;
 `;
 
 function App() {

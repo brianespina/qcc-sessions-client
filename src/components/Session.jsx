@@ -5,7 +5,7 @@ import axios from "axios";
 
 const Title = styled.h2`
   font-size: 20px;
-  font-weight: bold;
+  font-weight: 900;
 `;
 
 const SessionCard = styled.div`
@@ -45,7 +45,6 @@ export const Session = (props) => {
         />
       ) : (
         <>
-          <p>{id}</p>
           <Title>{title}</Title>
           <p>{date}</p>
           <p>{status}</p>
