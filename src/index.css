@@ -84,8 +84,34 @@ h6 {
   isolation: isolate;
 }
 
+button {
+  cursor: pointer;
+}
+
 .card {
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   padding: 20px;
   border-radius: 7px;
+}
+
+.card.add-button {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.card.add-button * {
+  cursor: pointer;
+}
+
+.card.add-button:active {
+  box-shadow: none;
+  transform: scale(0.97);
+}
+
+.card.add-button:hover {
+  background: #eeeeee;
+}
+
+.card.add-button:hover svg {
+  fill: #fff;
 }

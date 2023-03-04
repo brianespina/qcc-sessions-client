@@ -4,11 +4,22 @@ import styled from "styled-components";
 import Session from "./components/Session";
 import SessionForm from "./components/SessionForm";
 import Container from "./components/Container";
+import { HiPlus } from "react-icons/hi";
 
 const Sessions = styled.div`
   display: grid;
   grid-template-columns: auto auto auto;
   gap: 20px;
+`;
+
+const AddButton = styled.button`
+  background: none;
+  border: none;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 function App() {
@@ -63,16 +74,17 @@ function App() {
               editSession={editSession}
             />
           ))}
+        <div className="card add-button">
+          <AddButton
+            onClick={() => {
+              setMode("add");
+            }}
+          >
+            <HiPlus size={100} color="#EEEEEE" />
+          </AddButton>
+        </div>
       </Sessions>
       {mode === "add" && <SessionForm handleSubmit={addSession} />}
-
-      <button
-        onClick={() => {
-          setMode("add");
-        }}
-      >
-        Add Session +
-      </button>
     </Container>
   );
 }
