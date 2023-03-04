@@ -1,17 +1,34 @@
 import styled from "styled-components";
 import { useState } from "react";
 import SessionForm from "./SessionForm";
-import axios from "axios";
+import { RiDeleteBin6Line, RiEdit2Line } from "react-icons/ri";
 
+//Styled Components
 const Title = styled.h2`
   font-size: 20px;
   font-weight: 900;
 `;
 
-const SessionCard = styled.div`
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  padding: 20px;
-  flex: auto;
+const SessionCard = styled.div``;
+const StatusChip = styled.span`
+  background: #1dd1a1;
+  color: #fff;
+  font-weight: normal;
+  display: inline-block;
+  font-size: var(--font-sm);
+  padding-inline: 6px;
+  border-radius: 10px;
+  margin-left: 5px;
+`;
+
+const DateTime = styled.p`
+  font-size: var(--font-sm);
+`;
+
+const Button = styled.button`
+  outline: none;
+  background: none;
+  border: none;
 `;
 
 export const Session = (props) => {
@@ -35,8 +52,24 @@ export const Session = (props) => {
     setIsEditMode(false);
   };
 
+  const getDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString("en-us", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
+
+  const getTime = (timeString) => {
+    return Intl.DateTimeFormat("en", {
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    }).format(new Date(timeString));
+  };
+
   return (
-    <SessionCard>
+    <SessionCard className="card">
       {isEditMode ? (
         <SessionForm
           data={{ id, title, date, attendees, status, type, handler, notes }}
@@ -45,25 +78,29 @@ export const Session = (props) => {
         />
       ) : (
         <>
-          <Title>{title}</Title>
-          <p>{date}</p>
-          <p>{status}</p>
+          <Title>
+            {title.trim()}
+            <StatusChip>{status.toLowerCase()}</StatusChip>
+          </Title>
+          <DateTime>
+            {getDate(date)} {getTime(date)}
+          </DateTime>
           <p>{type}</p>
           <p>{notes}</p>
-          <button
+          <Button
             onClick={() => {
               deleteSession(id);
             }}
           >
-            Delete
-          </button>
-          <button
+            <RiDeleteBin6Line color="#ff6b6b" />
+          </Button>
+          <Button
             onClick={() => {
               setIsEditMode(true);
             }}
           >
-            Edit
-          </button>
+            <RiEdit2Line color="#48dbfb" />
+          </Button>
         </>
       )}
     </SessionCard>

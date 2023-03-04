@@ -6,13 +6,9 @@ import SessionForm from "./components/SessionForm";
 import Container from "./components/Container";
 
 const Sessions = styled.div`
-  display: flex;
-  gap: 1em;
-  margin-block: 20px;
-  justify-content: space-between;
-  overflow: hidden;
-  padding: 20px;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 20px;
 `;
 
 function App() {

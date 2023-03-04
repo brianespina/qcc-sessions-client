@@ -24,7 +24,6 @@ const SessionForm = ({
   const handleChange = (e) => {
     const value = e.target.value;
     const name = e.target.name;
-
     setSessionData({
       ...sessionData,
       [name]: value,
