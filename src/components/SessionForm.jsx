@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
+import DatePicker from "react-datepicker";
+import moment from "moment";
+import "react-datepicker/dist/react-datepicker.css";
 
 const initialSessionFormData = {
   title: "",
-  date: "",
+  date: Date.now(),
   attendees: [1, 2, 3, 4, 5],
   status: "",
   type: "",
@@ -28,27 +31,36 @@ const SessionForm = ({
       ...sessionData,
       [name]: value,
     });
-  };
 
+    console.log(value);
+  };
   return (
     <>
+      {/* <Formik initialValues={initialSessionFormData} onSubmit={}></Formik> */}
       <form
         onSubmit={(e) => {
           handleSubmit(e, sessionData);
         }}
       >
+        <DatePicker
+          selected={new Date(sessionData.date)}
+          onChange={(date) =>
+            setSessionData({
+              ...sessionData,
+              date: moment(date).format("YYYY-MM-DD HH:mm:ss"),
+            })
+          }
+          showTimeSelect
+          timeFormat="HH:mm"
+          timeIntervals={15}
+          timeCaption="time"
+          dateFormat="MMMM d, yyyy h:mm aa"
+        />
         <input
           type="text"
           name="title"
           id="title"
           value={sessionData.title}
-          onChange={handleChange}
-        />
-        <input
-          type="datetime-local"
-          name="date"
-          id="date"
-          value={sessionData.date}
           onChange={handleChange}
         />
         <select

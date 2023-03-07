@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import SessionForm from "./SessionForm";
 import { RiDeleteBin6Line, RiEdit2Line } from "react-icons/ri";
+import moment from "moment";
 
 //Styled Components
 const Title = styled.h2`
@@ -52,22 +53,6 @@ export const Session = (props) => {
     setIsEditMode(false);
   };
 
-  const getDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString("en-us", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  };
-
-  const getTime = (timeString) => {
-    return Intl.DateTimeFormat("en", {
-      hour: "numeric",
-      minute: "numeric",
-      hour12: true,
-    }).format(new Date(timeString));
-  };
-
   return (
     <SessionCard className="card">
       {isEditMode ? (
@@ -82,9 +67,7 @@ export const Session = (props) => {
             {title.trim()}
             <StatusChip>{status.toLowerCase()}</StatusChip>
           </Title>
-          <DateTime>
-            {getDate(date)} {getTime(date)}
-          </DateTime>
+          <DateTime>{moment(date).format("MMMM d, yyyy hh:mm a")}</DateTime>
           <p>{type}</p>
           <p>{notes}</p>
           <Button
