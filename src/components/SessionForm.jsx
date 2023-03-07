@@ -31,8 +31,6 @@ const SessionForm = ({
       ...sessionData,
       [name]: value,
     });
-
-    console.log(value);
   };
   return (
     <>
@@ -40,6 +38,7 @@ const SessionForm = ({
       <form
         onSubmit={(e) => {
           handleSubmit(e, sessionData);
+          console.log(sessionData.date);
         }}
       >
         <DatePicker
