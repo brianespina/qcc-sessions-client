@@ -90,9 +90,7 @@ const SessionForm = ({
           onChange={handleChange}
         ></textarea>
 
-        <button type="submit">
-          {mode === "edit" ? "Edit Session" : "Create Session"}
-        </button>
+        <button type="submit">Submit</button>
       </form>
     </>
   );

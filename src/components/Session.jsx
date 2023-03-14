@@ -67,7 +67,7 @@ export const Session = (props) => {
             {title.trim()}
             <StatusChip>{status.toLowerCase()}</StatusChip>
           </Title>
-          <DateTime>{moment(date).format("MMMM d, yyyy hh:mm a")}</DateTime>
+          <DateTime>{moment(date).format("MMMM D, yyyy hh:mm a")}</DateTime>
           <p>{type}</p>
           <p>{notes}</p>
           <Button
@@ -75,14 +75,14 @@ export const Session = (props) => {
               deleteSession(id);
             }}
           >
-            <RiDeleteBin6Line color="#ff6b6b" />
+            <RiDeleteBin6Line color="#333" />
           </Button>
           <Button
             onClick={() => {
               setIsEditMode(true);
             }}
           >
-            <RiEdit2Line color="#48dbfb" />
+            <RiEdit2Line color="#333" />
           </Button>
         </>
       )}
