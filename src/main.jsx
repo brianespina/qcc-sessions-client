@@ -13,7 +13,7 @@ const router = createBrowserRouter([
     errorElement: <NotFound />,
     children: [
       {
-        path: "/dashboard",
+        path: "/",
         element: <Dashboard />,
         handle: {
           title: "Dashboard",
