@@ -8,7 +8,7 @@ import { HiPlus } from "react-icons/hi";
 import BasicButton from "./BasicButton";
 import Modal from "react-modal";
 import ButtonRow from "./ButtonRow";
-
+import Chip from "./Chip";
 const Sessions = styled.div`
   display: grid;
   grid-template-columns: auto auto;
@@ -16,6 +16,15 @@ const Sessions = styled.div`
   margin-top: 20px;
 `;
 
+const Filters = styled.div`
+  padding-top: 20px;
+  display: flex;
+  gap: 10px;
+  div {
+    display: flex;
+    gap: 8px;
+  }
+`;
 export default function SessionGrid({ showControl = true }) {
   const [sessions, setSessions] = useState([]);
   const [isAddMode, setIsAddMode] = useState(false);
@@ -69,7 +78,13 @@ export default function SessionGrid({ showControl = true }) {
           <BasicButton>Bulk Action</BasicButton>
         </ButtonRow>
       )}
-
+      <Filters>
+        Filter:
+        <div>
+          <Chip>Training</Chip>
+          <Chip>General Assembly</Chip>
+        </div>
+      </Filters>
       <Sessions>
         {sessions &&
           sessions.map((session, i) => {
