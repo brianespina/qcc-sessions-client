@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useMatches } from "react-router-dom";
 import styled from "styled-components";
 
 const SideBar = styled.aside`
@@ -21,11 +21,15 @@ const Header = styled.header`
   margin-bottom: 20px;
 `;
 export default function Root() {
+  let matches = useMatches();
+  let title = matches.filter((match) => Boolean(match.handle?.title))[0].handle
+    .title;
+  console.log(title);
   return (
     <MainLayout>
       <SideBar>Sidebar</SideBar>
       <BodyLayout>
-        <Header>Header</Header>
+        <Header>{title}</Header>
         <Outlet />
       </BodyLayout>
     </MainLayout>

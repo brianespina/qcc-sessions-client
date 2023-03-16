@@ -13,8 +13,18 @@ const router = createBrowserRouter([
     errorElement: <NotFound />,
     children: [
       {
-        path: "/",
+        path: "/dashboard",
         element: <Dashboard />,
+        handle: {
+          title: "Dashboard",
+        },
+      },
+      {
+        path: "/sessions",
+        element: <Dashboard />,
+        handle: {
+          title: "Sessions",
+        },
       },
     ],
   },
