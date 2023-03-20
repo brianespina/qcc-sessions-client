@@ -3,6 +3,9 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root from "./routes/Root";
 import Dashboard from "./routes/Dashboard";
+import Sessions from "./routes/Sessions";
+import Lessons from "./routes/Lessons";
+import Members from "./routes/Members";
 import NotFound from "./routes/NotFound";
 import "./index.css";
 
@@ -21,9 +24,23 @@ const router = createBrowserRouter([
       },
       {
         path: "/sessions",
-        element: <Dashboard />,
+        element: <Sessions />,
         handle: {
           title: "Sessions",
+        },
+      },
+      {
+        path: "/lessons",
+        element: <Lessons />,
+        handle: {
+          title: "Lessons",
+        },
+      },
+      {
+        path: "/members",
+        element: <Members />,
+        handle: {
+          title: "Members",
         },
       },
     ],

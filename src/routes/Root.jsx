@@ -1,4 +1,4 @@
-import { Outlet, useMatches } from "react-router-dom";
+import { Outlet, useMatches, Link } from "react-router-dom";
 import styled from "styled-components";
 
 const SideBar = styled.aside`
@@ -18,8 +18,33 @@ const BodyLayout = styled.section`
 const Header = styled.header`
   height: 50px;
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 60px;
+  display: flex;
+  justify-content: space-between;
+  padding-inline: 40px;
+  padding-block: 20px;
 `;
+
+const Title = styled.h1`
+  font-weight: 600;
+  color: #333;
+`;
+
+const ProfileImage = styled.div`
+  width: 20px;
+  height: 20px;
+  background: red;
+`;
+
+const Menu = styled.ul`
+  list-style: none;
+  padding-block: 20px;
+  a {
+    text-decoration: none;
+    color: #333;
+  }
+`;
+
 export default function Root() {
   let matches = useMatches();
   let title = matches.filter((match) => Boolean(match.handle?.title))[0].handle
@@ -27,9 +52,27 @@ export default function Root() {
   console.log(title);
   return (
     <MainLayout>
-      <SideBar>Sidebar</SideBar>
+      <SideBar>
+        <Menu>
+          <li>
+            <Link to="/">Dashboard</Link>
+          </li>
+          <li>
+            <Link to="/sessions">Sessions</Link>
+          </li>
+          <li>
+            <Link to="/lessons">Lessons</Link>
+          </li>
+          <li>
+            <Link to="/members">Members</Link>
+          </li>
+        </Menu>
+      </SideBar>
       <BodyLayout>
-        <Header>{title}</Header>
+        <Header>
+          <Title>{title}</Title>
+          <ProfileImage></ProfileImage>
+        </Header>
         <Outlet />
       </BodyLayout>
     </MainLayout>
