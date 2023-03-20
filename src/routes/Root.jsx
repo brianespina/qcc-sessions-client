@@ -1,14 +1,29 @@
 import { Outlet, useMatches, Link } from "react-router-dom";
+import { useState } from "react";
 import styled from "styled-components";
 
+const sidebarWidth = 200;
+
 const SideBar = styled.aside`
-  width: 200px;
+  width: ${sidebarWidth}px;
   height: 100vh;
   background: #d9d9d9;
+  position: relative;
+  left: 0%;
+  transform: translateX(-100%);
+  transition: all 0.4s ease;
 `;
 
 const MainLayout = styled.main`
   display: flex;
+  transition: all 0.4s ease;
+  transform: translateX(-${sidebarWidth / 2}px);
+  &.sidebarIsActive {
+    transform: translateX(0);
+  }
+  &.sidebarIsActive ${SideBar} {
+    transform: translateX(0);
+  }
 `;
 
 const BodyLayout = styled.section`
@@ -31,9 +46,10 @@ const Title = styled.h1`
 `;
 
 const ProfileImage = styled.div`
-  width: 20px;
-  height: 20px;
-  background: red;
+  width: 30px;
+  height: 30px;
+  background: #d9d9d9;
+  border-radius: 100%;
 `;
 
 const Menu = styled.ul`
@@ -49,9 +65,11 @@ export default function Root() {
   let matches = useMatches();
   let title = matches.filter((match) => Boolean(match.handle?.title))[0].handle
     .title;
-  console.log(title);
+
+  const [sidebarIsActive, setSidebarIsActive] = useState(true);
+
   return (
-    <MainLayout>
+    <MainLayout className={sidebarIsActive && "sidebarIsActive"}>
       <SideBar>
         <Menu>
           <li>
@@ -70,7 +88,9 @@ export default function Root() {
       </SideBar>
       <BodyLayout>
         <Header>
-          <Title>{title}</Title>
+          <Title onClick={() => setSidebarIsActive(!sidebarIsActive)}>
+            {title}
+          </Title>
           <ProfileImage></ProfileImage>
         </Header>
         <Outlet />
