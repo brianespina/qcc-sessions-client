@@ -61,6 +61,18 @@ const Menu = styled.ul`
   }
 `;
 
+const CloseSidebar = styled.div`
+  background: #d9d9d9;
+  width: 13px;
+  height: 30px;
+  border-radius: 0 20px 20px 0;
+  top: 50%;
+  position: absolute;
+  right: 0;
+  transform: translateX(100%);
+  cursor: pointer;
+`;
+
 export default function Root() {
   let matches = useMatches();
   let title = matches.filter((match) => Boolean(match.handle?.title))[0].handle
@@ -85,6 +97,7 @@ export default function Root() {
             <Link to="/members">Members</Link>
           </li>
         </Menu>
+        <CloseSidebar onClick={() => setSidebarIsActive(false)} />
       </SideBar>
       <BodyLayout>
         <Header>
