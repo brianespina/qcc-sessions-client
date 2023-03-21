@@ -9,6 +9,7 @@ import BasicButton from "./BasicButton";
 import Modal from "react-modal";
 import ButtonRow from "./ButtonRow";
 import Chip from "./Chip";
+
 const Sessions = styled.div`
   display: grid;
   grid-template-columns: auto auto;
@@ -25,6 +26,18 @@ const Filters = styled.div`
     gap: 8px;
   }
 `;
+
+const modalStyles = {
+  content: {
+    top: "0",
+    bottom: "0",
+    right: "0",
+    left: "auto",
+  },
+  overlay: {
+    background: "transparent",
+  },
+};
 export default function SessionGrid({ showControl = true }) {
   const [sessions, setSessions] = useState([]);
   const [isAddMode, setIsAddMode] = useState(false);
@@ -105,6 +118,7 @@ export default function SessionGrid({ showControl = true }) {
         shouldCloseOnOverlayClick={true}
         shouldCloseOnEsc={true}
         onRequestClose={() => setIsAddMode(false)}
+        style={modalStyles}
       >
         <SessionForm handleSubmit={addSession} />
         <button onClick={() => setIsAddMode(false)}>Close</button>

@@ -3,6 +3,7 @@ import { useState } from "react";
 import SessionForm from "./SessionForm";
 import { RiDeleteBin6Line, RiEdit2Line } from "react-icons/ri";
 import moment from "moment";
+import Modal from "react-modal";
 
 //Styled Components
 const Title = styled.h2`
@@ -32,6 +33,18 @@ const Button = styled.button`
   border: none;
 `;
 
+const modalStyles = {
+  content: {
+    top: "0",
+    bottom: "0",
+    right: "0",
+    left: "auto",
+  },
+  overlay: {
+    background: "transparent",
+  },
+};
+
 export const Session = (props) => {
   const {
     id,
@@ -54,39 +67,47 @@ export const Session = (props) => {
   };
 
   return (
-    <SessionCard className="card">
-      {isEditMode ? (
+    <>
+      <Modal
+        appElement={document.getElementById("root")}
+        isOpen={isEditMode}
+        shouldCloseOnOverlayClick={true}
+        shouldCloseOnEsc={true}
+        onRequestClose={() => setIsEditMode(false)}
+        style={modalStyles}
+      >
         <SessionForm
           data={{ id, title, date, attendees, status, type, handler, notes }}
           handleSubmit={handleEditSubmit}
           mode="edit"
         />
-      ) : (
-        <>
-          <Title>
-            {title.trim()}
-            <StatusChip>{status.toLowerCase()}</StatusChip>
-          </Title>
-          <DateTime>{moment(date).format("MMMM D, yyyy hh:mm a")}</DateTime>
-          <p>{type}</p>
-          <p>{notes}</p>
-          <Button
-            onClick={() => {
-              deleteSession(id);
-            }}
-          >
-            <RiDeleteBin6Line color="#333" />
-          </Button>
-          <Button
-            onClick={() => {
-              setIsEditMode(true);
-            }}
-          >
-            <RiEdit2Line color="#333" />
-          </Button>
-        </>
-      )}
-    </SessionCard>
+        <button onClick={() => setIsEditMode(false)}>Close</button>
+      </Modal>
+
+      <SessionCard className="card">
+        <Title>
+          {title.trim()}
+          <StatusChip>{status.toLowerCase()}</StatusChip>
+        </Title>
+        <DateTime>{moment(date).format("MMMM D, yyyy hh:mm a")}</DateTime>
+        <p>{type}</p>
+        <p>{notes}</p>
+        <Button
+          onClick={() => {
+            deleteSession(id);
+          }}
+        >
+          <RiDeleteBin6Line color="#333" />
+        </Button>
+        <Button
+          onClick={() => {
+            setIsEditMode(true);
+          }}
+        >
+          <RiEdit2Line color="#333" />
+        </Button>
+      </SessionCard>
+    </>
   );
 };
 

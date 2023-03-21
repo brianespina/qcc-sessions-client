@@ -115,3 +115,18 @@ button {
 .card.add-button:hover svg {
   fill: #fff;
 }
+
+.ReactModal__Overlay {
+  opacity: 0;
+  transform: translateX(50px);
+  transition: all 0.2s ease-in-out;
+}
+
+.ReactModal__Overlay--after-open {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.ReactModal__Overlay--before-close {
+  opacity: 0;
+}
