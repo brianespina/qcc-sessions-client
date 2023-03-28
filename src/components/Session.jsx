@@ -11,7 +11,9 @@ const Title = styled.h2`
   font-weight: 900;
 `;
 
-const SessionCard = styled.div``;
+const SessionCard = styled.div`
+  cursor: pointer;
+`;
 const StatusChip = styled.span`
   background: #1dd1a1;
   color: #fff;
@@ -59,21 +61,21 @@ export const Session = (props) => {
     editSession,
   } = props;
 
-  const [isEditMode, setIsEditMode] = useState(false);
+  const [mode, setMode] = useState("none");
 
   const handleEditSubmit = (e, sessionData) => {
     editSession(e, sessionData);
-    setIsEditMode(false);
+    setMode("none");
   };
 
   return (
     <>
       <Modal
         appElement={document.getElementById("root")}
-        isOpen={isEditMode}
+        isOpen={mode === "edit"}
         shouldCloseOnOverlayClick={true}
         shouldCloseOnEsc={true}
-        onRequestClose={() => setIsEditMode(false)}
+        onRequestClose={() => setMode("none")}
         style={modalStyles}
       >
         <SessionForm
@@ -81,10 +83,40 @@ export const Session = (props) => {
           handleSubmit={handleEditSubmit}
           mode="edit"
         />
-        <button onClick={() => setIsEditMode(false)}>Close</button>
+        <button onClick={() => setMode("none")}>Close</button>
       </Modal>
 
-      <SessionCard className="card">
+      <Modal
+        appElement={document.getElementById("root")}
+        isOpen={mode === "view"}
+        shouldCloseOnOverlayClick={true}
+        shouldCloseOnEsc={true}
+        onRequestClose={() => setMode("none")}
+        style={modalStyles}
+      >
+        <Title>
+          {title.trim()}
+          <StatusChip>{status.toLowerCase()}</StatusChip>
+        </Title>
+        <DateTime>{moment(date).format("MMMM D, yyyy hh:mm a")}</DateTime>
+        <p>{type}</p>
+        <p>{notes}</p>
+        <Button
+          onClick={() => {
+            deleteSession(id);
+          }}
+        >
+          <RiDeleteBin6Line color="#333" />
+        </Button>
+        <button onClick={() => setMode("none")}>Close</button>
+      </Modal>
+
+      <SessionCard
+        className="card"
+        onClick={() => {
+          setMode("view");
+        }}
+      >
         <Title>
           {title.trim()}
           <StatusChip>{status.toLowerCase()}</StatusChip>
@@ -100,8 +132,9 @@ export const Session = (props) => {
           <RiDeleteBin6Line color="#333" />
         </Button>
         <Button
-          onClick={() => {
-            setIsEditMode(true);
+          onClick={(e) => {
+            e.stopPropagation();
+            setMode("edit");
           }}
         >
           <RiEdit2Line color="#333" />
