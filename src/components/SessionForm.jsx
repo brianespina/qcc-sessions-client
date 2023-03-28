@@ -21,7 +21,10 @@ const SessionForm = ({
   const [sessionData, setSessionData] = useState(data);
 
   useEffect(() => {
-    setSessionData(data);
+    setSessionData({
+      ...data,
+      date: moment(data.date).format(),
+    });
   }, [data]);
 
   const handleChange = (e) => {
@@ -32,23 +35,23 @@ const SessionForm = ({
       [name]: value,
     });
   };
+
   return (
     <>
       {/* <Formik initialValues={initialSessionFormData} onSubmit={}></Formik> */}
       <form
         onSubmit={(e) => {
           handleSubmit(e, sessionData);
-          console.log(sessionData.date);
         }}
       >
         <DatePicker
           selected={new Date(sessionData.date)}
-          onChange={(date) =>
+          onChange={(date) => {
             setSessionData({
               ...sessionData,
-              date: moment(date).format("YYYY-MM-DD HH:mm:ss"),
-            })
-          }
+              date: moment(date).format(),
+            });
+          }}
           showTimeSelect
           timeFormat="HH:mm"
           timeIntervals={15}
