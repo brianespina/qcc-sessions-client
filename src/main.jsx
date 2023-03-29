@@ -34,7 +34,7 @@ const router = createBrowserRouter([
             },
           },
           {
-            path: "archived",
+            path: "archive",
             element: <SessionArchive />,
             handle: {
               title: "Archived Sessions",
