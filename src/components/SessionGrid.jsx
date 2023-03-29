@@ -43,7 +43,9 @@ export default function SessionGrid({ showControl = true }) {
   const [isAddMode, setIsAddMode] = useState(false);
 
   const fetchSessions = async () => {
-    const response = await axios.get("http://localhost:3000/api/v1/sessions");
+    const response = await axios.get(
+      "http://localhost:3000/api/v1/sessions-current"
+    );
     setSessions(response.data);
   };
 

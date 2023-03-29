@@ -7,8 +7,8 @@ const initialSessionFormData = {
   title: "",
   date: Date.now(),
   attendees: [1, 2, 3, 4, 5],
-  status: "",
-  type: "",
+  status: "active",
+  type: "training",
   handler: 2,
   notes: "",
 };
@@ -71,8 +71,8 @@ const SessionForm = ({
           value={sessionData.status}
           onChange={handleChange}
         >
-          <option value="Canceled">Canceled</option>
-          <option value="Active">Active</option>
+          <option value="active">Active</option>
+          <option value="archive">Archive</option>
         </select>
         <select
           name="type"
