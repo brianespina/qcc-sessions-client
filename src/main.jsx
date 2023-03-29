@@ -7,6 +7,7 @@ import Sessions from "./routes/Sessions";
 import Lessons from "./routes/Lessons";
 import Members from "./routes/Members";
 import NotFound from "./routes/NotFound";
+import SessionArchive from "./routes/SessionArchive";
 import "./index.css";
 
 const router = createBrowserRouter([
@@ -24,10 +25,22 @@ const router = createBrowserRouter([
       },
       {
         path: "/sessions",
-        element: <Sessions />,
-        handle: {
-          title: "Sessions",
-        },
+        children: [
+          {
+            index: true,
+            element: <Sessions />,
+            handle: {
+              title: "Sessions",
+            },
+          },
+          {
+            path: "archived",
+            element: <SessionArchive />,
+            handle: {
+              title: "Archived Sessions",
+            },
+          },
+        ],
       },
       {
         path: "/lessons",
