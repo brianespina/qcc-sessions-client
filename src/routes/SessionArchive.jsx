@@ -1,3 +1,9 @@
+import SessionGrid from "../components/SessionGrid";
+
 export default function SessionArchive() {
-  return <div>Archive</div>;
+  return (
+    <>
+      <SessionGrid display="archive" />
+    </>
+  );
 }

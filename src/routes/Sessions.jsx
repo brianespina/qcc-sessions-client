@@ -1,3 +1,8 @@
+import SessionGrid from "../components/SessionGrid";
 export default function Sessions() {
-  return <div>Sessions</div>;
+  return (
+    <>
+      <SessionGrid />
+    </>
+  );
 }
