@@ -38,15 +38,28 @@ const modalStyles = {
     background: "transparent",
   },
 };
-export default function SessionGrid({ showControl = true }) {
+export default function SessionGrid({
+  showControl = true,
+  display = "current",
+}) {
   const [sessions, setSessions] = useState([]);
   const [isAddMode, setIsAddMode] = useState(false);
 
   const fetchSessions = async () => {
-    const response = await axios.get(
-      "http://localhost:3000/api/v1/sessions-current"
-    );
-    setSessions(response.data);
+    if (display === "current") {
+      const response = await axios.get(
+        "http://localhost:3000/api/v1/sessions-current"
+      );
+      setSessions(response.data);
+      return;
+    }
+
+    if (display === "archive") {
+      const response = await axios.get(
+        "http://localhost:3000/api/v1/sessions-archive"
+      );
+      setSessions(response.data);
+    }
   };
 
   const deleteSession = async (id) => {
