@@ -91,7 +91,7 @@ export default function Root() {
             <Link to="/sessions">Sessions</Link>
             <ul>
               <li>
-                <Link to="/sessions/archived">Session Archived</Link>
+                <Link to="/sessions/archived">Session Archive</Link>
               </li>
             </ul>
           </li>
