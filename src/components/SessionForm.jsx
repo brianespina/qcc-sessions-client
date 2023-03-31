@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
+import styled from "styled-components";
+import EditableContentInput from "./EditableContentInput";
 
 const initialSessionFormData = {
   title: "",
@@ -38,12 +40,19 @@ const SessionForm = ({
 
   return (
     <>
-      {/* <Formik initialValues={initialSessionFormData} onSubmit={}></Formik> */}
       <form
         onSubmit={(e) => {
           handleSubmit(e, sessionData);
         }}
       >
+        <EditableContentInput
+          type="text"
+          name="title"
+          id="title"
+          value={sessionData.title}
+          onChange={handleChange}
+        />
+
         <DatePicker
           selected={new Date(sessionData.date)}
           onChange={(date) => {
@@ -58,13 +67,7 @@ const SessionForm = ({
           timeCaption="time"
           dateFormat="MMMM d, yyyy h:mm aa"
         />
-        <input
-          type="text"
-          name="title"
-          id="title"
-          value={sessionData.title}
-          onChange={handleChange}
-        />
+
         <select
           name="status"
           id="status"

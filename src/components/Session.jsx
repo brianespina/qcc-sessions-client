@@ -4,6 +4,7 @@ import SessionForm from "./SessionForm";
 import { RiDeleteBin6Line, RiEdit2Line } from "react-icons/ri";
 import moment from "moment";
 import Modal from "react-modal";
+import EditableContentInput from "./EditableContentInput";
 
 //Styled Components
 const Title = styled.h2`
@@ -86,35 +87,10 @@ export const Session = (props) => {
         <button onClick={() => setMode("none")}>Close</button>
       </Modal>
 
-      <Modal
-        appElement={document.getElementById("root")}
-        isOpen={mode === "view"}
-        shouldCloseOnOverlayClick={true}
-        shouldCloseOnEsc={true}
-        onRequestClose={() => setMode("none")}
-        style={modalStyles}
-      >
-        <Title>
-          {title.trim()}
-          <StatusChip>{status.toLowerCase()}</StatusChip>
-        </Title>
-        <DateTime>{moment(date).format("MMMM D, yyyy hh:mm a")}</DateTime>
-        <p>{type}</p>
-        <p>{notes}</p>
-        <Button
-          onClick={() => {
-            deleteSession(id);
-          }}
-        >
-          <RiDeleteBin6Line color="#333" />
-        </Button>
-        <button onClick={() => setMode("none")}>Close</button>
-      </Modal>
-
       <SessionCard
         className="card"
         onClick={() => {
-          setMode("view");
+          setMode("edit");
         }}
       >
         <Title>
@@ -130,14 +106,6 @@ export const Session = (props) => {
           }}
         >
           <RiDeleteBin6Line color="#333" />
-        </Button>
-        <Button
-          onClick={(e) => {
-            e.stopPropagation();
-            setMode("edit");
-          }}
-        >
-          <RiEdit2Line color="#333" />
         </Button>
       </SessionCard>
     </>
