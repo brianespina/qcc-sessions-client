@@ -34,15 +34,34 @@ export const EditButton = styled.button`
 export default function EditableContentInput(props) {
   const [isReadOnly, setIsReadOnly] = useState(true);
 
-  const handleChange = (e) => {
-    e.preventDefault();
+  const handleChange = (event) => {
+    event.preventDefault();
     setIsReadOnly(false);
+  };
+
+  const exitAndSave = () => {
+    setIsReadOnly(true);
+  };
+
+  const handleExit = (event) => {
+    if (event.type === "blur") {
+      exitAndSave();
+    }
+    if (event.key === "Enter") {
+      event.preventDefault();
+      exitAndSave();
+    }
   };
 
   return (
     <>
       <FormControl>
-        <CustomInput {...props} readOnly={isReadOnly} />
+        <CustomInput
+          {...props}
+          readOnly={isReadOnly}
+          onBlur={handleExit}
+          onKeyDown={handleExit}
+        />
         <EditButton onClick={handleChange}>
           <RiEdit2Line />
         </EditButton>
