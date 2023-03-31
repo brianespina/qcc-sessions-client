@@ -7,7 +7,7 @@ export function title() {
 export default function Dashboard() {
   return (
     <>
-      <SessionGrid />
+      <SessionGrid showControl={false} />
     </>
   );
 }
