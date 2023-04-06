@@ -21,8 +21,6 @@ const FormControl = styled.div`
 `;
 
 const CustomInput = styled.input`
-  font-size: 20px;
-  font-weight: 900;
   min-width: 130px;
   width: ${(props) => props.value.length}ch;
   ${inputReset};
