@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
-import DatePicker from "react-datepicker";
 import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
-import styled from "styled-components";
-import EditableContentInput from "./EditableContentInput";
+import EditableContentTitle from "./SessionFormFields/EditableContentTitle";
+import EditableContentDateTime from "./SessionFormFields/EditableContentDateTime";
 
 const initialSessionFormData = {
   title: "",
@@ -45,7 +44,7 @@ const SessionForm = ({
           handleSubmit(e, sessionData);
         }}
       >
-        <EditableContentInput
+        <EditableContentTitle
           type="text"
           name="title"
           id="title"
@@ -53,7 +52,7 @@ const SessionForm = ({
           onChange={handleChange}
         />
 
-        <DatePicker
+        <EditableContentDateTime
           selected={new Date(sessionData.date)}
           onChange={(date) => {
             setSessionData({
@@ -61,11 +60,6 @@ const SessionForm = ({
               date: moment(date).format(),
             });
           }}
-          showTimeSelect
-          timeFormat="HH:mm"
-          timeIntervals={15}
-          timeCaption="time"
-          dateFormat="MMMM d, yyyy h:mm aa"
         />
 
         <select

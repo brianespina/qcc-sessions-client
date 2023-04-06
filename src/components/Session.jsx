@@ -4,7 +4,6 @@ import SessionForm from "./SessionForm";
 import { RiDeleteBin6Line, RiEdit2Line } from "react-icons/ri";
 import moment from "moment";
 import Modal from "react-modal";
-import EditableContentInput from "./EditableContentInput";
 
 //Styled Components
 const Title = styled.h2`

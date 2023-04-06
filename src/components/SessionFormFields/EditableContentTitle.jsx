@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import styled from "styled-components";
-import { RiEdit2Line } from "react-icons/ri";
+import EditFieldButton from "./EditFieldButton";
+import FormControl from "./FormControl";
 
 const inputReset = `
   border: none;
@@ -13,30 +14,19 @@ const inputReset = `
     border: none;
     outline: none;
     transform: translateX(-30px);
+    text-decoration: underline;
   }
 `;
 
-const FormControl = styled.div`
-  display: flex;
-`;
-
 const CustomInput = styled.input`
+  font-weight: 600;
+  font-size: 20px;
   min-width: 130px;
   width: ${(props) => props.value.length}ch;
   ${inputReset};
 `;
 
-export const EditButton = styled.button`
-  background: none;
-  border: none;
-  transition: all 0.2s ease;
-  &.hide {
-    transform: translateX(-10px);
-    opacity: 0;
-  }
-`;
-
-export default function EditableContentInput(props) {
+export default function EditableContentTitle(props) {
   const [isReadOnly, setIsReadOnly] = useState(true);
   const ref = useRef(null);
 
@@ -63,9 +53,10 @@ export default function EditableContentInput(props) {
   return (
     <>
       <FormControl>
-        <EditButton onClick={handleClick} className={!isReadOnly && "hide"}>
-          <RiEdit2Line />
-        </EditButton>
+        <EditFieldButton
+          onClick={handleClick}
+          className={!isReadOnly && "hide"}
+        />
         <CustomInput
           {...props}
           readOnly={isReadOnly}
