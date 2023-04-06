@@ -1,17 +1,18 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import styled from "styled-components";
 import { RiEdit2Line } from "react-icons/ri";
 
 const inputReset = `
   border: none;
+  transition: all 0.2s ease;
   &[readonly]:focus{
     border: none;
     outline: none;
   }
   &:not([readonly]){
     border: none;
-    border-bottom: solid thin #000;
     outline: none;
+    transform: translateX(-30px);
   }
 `;
 
@@ -22,6 +23,7 @@ const FormControl = styled.div`
 const CustomInput = styled.input`
   font-size: 20px;
   font-weight: 900;
+  min-width: 130px;
   width: ${(props) => props.value.length}ch;
   ${inputReset};
 `;
@@ -29,13 +31,20 @@ const CustomInput = styled.input`
 export const EditButton = styled.button`
   background: none;
   border: none;
+  transition: all 0.2s ease;
+  &.hide {
+    transform: translateX(-10px);
+    opacity: 0;
+  }
 `;
 
 export default function EditableContentInput(props) {
   const [isReadOnly, setIsReadOnly] = useState(true);
+  const ref = useRef(null);
 
-  const handleChange = (event) => {
+  const handleClick = (event) => {
     event.preventDefault();
+    ref.current.focus();
     setIsReadOnly(false);
   };
 
@@ -56,15 +65,16 @@ export default function EditableContentInput(props) {
   return (
     <>
       <FormControl>
+        <EditButton onClick={handleClick} className={!isReadOnly && "hide"}>
+          <RiEdit2Line />
+        </EditButton>
         <CustomInput
           {...props}
           readOnly={isReadOnly}
           onBlur={handleExit}
           onKeyDown={handleExit}
+          ref={ref}
         />
-        <EditButton onClick={handleChange}>
-          <RiEdit2Line />
-        </EditButton>
       </FormControl>
     </>
   );
