@@ -4,6 +4,7 @@ import SessionForm from "./SessionForm";
 import { RiDeleteBin6Line, RiEdit2Line } from "react-icons/ri";
 import moment from "moment";
 import Modal from "react-modal";
+import SessionDetails from "./SessionDetails";
 
 //Styled Components
 const Title = styled.h2`
@@ -35,12 +36,34 @@ const Button = styled.button`
   border: none;
 `;
 
+const ControlBar = styled.div`
+  position: relative;
+  z-index: 5;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const ShowHide = styled.div`
+  opacity: 0;
+  transform: translate(100%);
+  transition: all 0.2s ease;
+  position: absolute;
+  padding-right: 30px;
+  padding-top: 45px;
+  width: 390px;
+  &.active {
+    opacity: 1;
+    transform: translate(0);
+  }
+`;
+
 const modalStyles = {
   content: {
     top: "0",
     bottom: "0",
     right: "0",
     left: "auto",
+    width: "400px",
   },
   overlay: {
     background: "transparent",
@@ -61,35 +84,48 @@ export const Session = (props) => {
     editSession,
   } = props;
 
-  const [mode, setMode] = useState("none");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
 
   const handleEditSubmit = (e, sessionData) => {
     editSession(e, sessionData);
-    setMode("none");
+    setIsModalOpen(false);
   };
 
   return (
     <>
       <Modal
         appElement={document.getElementById("root")}
-        isOpen={mode === "edit"}
+        isOpen={isModalOpen}
         shouldCloseOnOverlayClick={true}
         shouldCloseOnEsc={true}
-        onRequestClose={() => setMode("none")}
+        onRequestClose={() => setIsModalOpen(false)}
         style={modalStyles}
       >
-        <SessionForm
-          data={{ id, title, date, attendees, status, type, handler, notes }}
-          handleSubmit={handleEditSubmit}
-          mode="edit"
-        />
-        <button onClick={() => setMode("none")}>Close</button>
+        <ShowHide className={!isEdit && "active"}>
+          <SessionDetails
+            data={{ id, title, date, attendees, status, type, handler, notes }}
+          />
+        </ShowHide>
+        <ShowHide className={isEdit && "active"}>
+          <SessionForm
+            data={{ id, title, date, attendees, status, type, handler, notes }}
+            handleSubmit={handleEditSubmit}
+            mode="edit"
+          />
+        </ShowHide>
+        <ControlBar>
+          <button onClick={() => setIsModalOpen(false)}>Close</button>
+          <button onClick={() => setIsEdit(!isEdit)}>
+            {isEdit ? "Cancel" : "Edit"}
+          </button>
+        </ControlBar>
       </Modal>
 
       <SessionCard
         className="card"
         onClick={() => {
-          setMode("edit");
+          setIsModalOpen(true);
         }}
       >
         <Title>

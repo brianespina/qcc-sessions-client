@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
-import EditableContentTitle from "./SessionFormFields/EditableContentTitle";
-import EditableContentDateTime from "./SessionFormFields/EditableContentDateTime";
+import DatePicker from "react-datepicker";
+import styled from "styled-components";
 
 const initialSessionFormData = {
   title: "",
@@ -13,6 +13,24 @@ const initialSessionFormData = {
   handler: 2,
   notes: "",
 };
+
+const FormWrap = styled.div`
+  & form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  & input,
+  & select {
+    padding-block: 5px;
+    padding-inline: 10px;
+    height: 40px;
+    width: 100%;
+  }
+  & textarea {
+    padding: 10px;
+  }
+`;
 
 const SessionForm = ({
   data = initialSessionFormData,
@@ -38,13 +56,13 @@ const SessionForm = ({
   };
 
   return (
-    <>
+    <FormWrap>
       <form
         onSubmit={(e) => {
           handleSubmit(e, sessionData);
         }}
       >
-        <EditableContentTitle
+        <input
           type="text"
           name="title"
           id="title"
@@ -52,7 +70,7 @@ const SessionForm = ({
           onChange={handleChange}
         />
 
-        <EditableContentDateTime
+        <DatePicker
           selected={new Date(sessionData.date)}
           onChange={(date) => {
             setSessionData({
@@ -60,6 +78,11 @@ const SessionForm = ({
               date: moment(date).format(),
             });
           }}
+          showTimeSelect
+          timeFormat="HH:mm"
+          timeIntervals={15}
+          timeCaption="time"
+          dateFormat="MMMM d, yyyy h:mm aa"
         />
 
         <select
@@ -81,6 +104,7 @@ const SessionForm = ({
           <option value="Training">Training</option>
           <option value="General Assembly">General Assembly</option>
         </select>
+
         <textarea
           name="notes"
           id="notes"
@@ -88,11 +112,11 @@ const SessionForm = ({
           rows="10"
           value={sessionData.notes}
           onChange={handleChange}
-        ></textarea>
+        />
 
         <button type="submit">Submit</button>
       </form>
-    </>
+    </FormWrap>
   );
 };
 
