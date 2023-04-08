@@ -12,7 +12,7 @@ import Chip from "./Chip";
 
 const Sessions = styled.div`
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: 1fr 1fr;
   gap: 20px;
   margin-top: 20px;
 `;
@@ -47,9 +47,11 @@ export default function SessionGrid({
 
   const fetchSessions = async () => {
     if (display === "current") {
-      const response = await axios.get(
-        "http://localhost:3000/api/v1/sessions-current"
-      );
+      const response = await axios
+        .get("http://localhost:3000/api/v1/sessions-current")
+        .catch((error) => {
+          console.log(error.toJSON());
+        });
       setSessions(response.data);
       return;
     }

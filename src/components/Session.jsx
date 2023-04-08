@@ -92,6 +92,11 @@ export const Session = (props) => {
     setIsModalOpen(false);
   };
 
+  const closeModal = () => {
+    setIsEdit(false);
+    setIsModalOpen(false);
+  };
+
   return (
     <>
       <Modal
@@ -99,7 +104,7 @@ export const Session = (props) => {
         isOpen={isModalOpen}
         shouldCloseOnOverlayClick={true}
         shouldCloseOnEsc={true}
-        onRequestClose={() => setIsModalOpen(false)}
+        onRequestClose={closeModal}
         style={modalStyles}
       >
         <ShowHide className={!isEdit && "active"}>
@@ -115,7 +120,7 @@ export const Session = (props) => {
           />
         </ShowHide>
         <ControlBar>
-          <button onClick={() => setIsModalOpen(false)}>Close</button>
+          <button onClick={closeModal}>Close</button>
           <button onClick={() => setIsEdit(!isEdit)}>
             {isEdit ? "Cancel" : "Edit"}
           </button>
