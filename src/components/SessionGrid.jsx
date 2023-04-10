@@ -41,7 +41,7 @@ const modalStyles = {
 };
 
 const GET_SESSIONS = gql`
-  query GetSessions($status: String!) {
+  query GetSessions($status: String) {
     sessions(status: $status) {
       date
       id
@@ -56,10 +56,7 @@ const GET_SESSIONS = gql`
   }
 `;
 
-export default function SessionGrid({
-  showControl = true,
-  display = "active",
-}) {
+export default function SessionGrid({ showControl = true, display }) {
   const [isAddMode, setIsAddMode] = useState(false);
 
   const { loading, error, data } = useQuery(GET_SESSIONS, {
