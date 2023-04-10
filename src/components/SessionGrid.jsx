@@ -51,12 +51,18 @@ const GET_SESSIONS = gql`
       type
       attendees {
         id
+        name
+        first_name
+        last_name
       }
     }
   }
 `;
 
-export default function SessionGrid({ showControl = true, display }) {
+export default function SessionGrid({
+  showControl = true,
+  display = "active",
+}) {
   const [isAddMode, setIsAddMode] = useState(false);
 
   const { loading, error, data } = useQuery(GET_SESSIONS, {
