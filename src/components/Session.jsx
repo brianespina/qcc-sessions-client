@@ -5,6 +5,7 @@ import { RiDeleteBin6Line, RiEdit2Line } from "react-icons/ri";
 import moment from "moment";
 import Modal from "react-modal";
 import SessionDetails from "./SessionDetails";
+import { useMutation, gql } from "@apollo/client";
 
 //Styled Components
 const Title = styled.h2`
@@ -70,19 +71,17 @@ const modalStyles = {
   },
 };
 
+const DELETE_SESSION = gql`
+  mutation Session($deleteSessionId: ID!) {
+    deleteSession(id: $deleteSessionId)
+  }
+`;
+
 export const Session = (props) => {
-  const {
-    id,
-    title,
-    date,
-    attendees,
-    status,
-    type,
-    handler,
-    notes,
-    deleteSession,
-    editSession,
-  } = props;
+  const { id, title, date, attendees, status, type, handler, notes, refetch } =
+    props;
+
+  const [deleteSession] = useMutation(DELETE_SESSION);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
@@ -99,42 +98,9 @@ export const Session = (props) => {
 
   return (
     <>
-      <Modal
-        appElement={document.getElementById("root")}
-        isOpen={isModalOpen}
-        shouldCloseOnOverlayClick={true}
-        shouldCloseOnEsc={true}
-        onRequestClose={closeModal}
-        style={modalStyles}
-      >
-        <ShowHide className={!isEdit && "active"}>
-          <SessionDetails
-            data={{ id, title, date, attendees, status, type, handler, notes }}
-          />
-        </ShowHide>
-        <ShowHide className={isEdit && "active"}>
-          <SessionForm
-            data={{ id, title, date, attendees, status, type, handler, notes }}
-            handleSubmit={handleEditSubmit}
-            mode="edit"
-          />
-        </ShowHide>
-        <ControlBar>
-          <button onClick={closeModal}>Close</button>
-          <button onClick={() => setIsEdit(!isEdit)}>
-            {isEdit ? "Cancel" : "Edit"}
-          </button>
-        </ControlBar>
-      </Modal>
-
-      <SessionCard
-        className="card"
-        onClick={() => {
-          setIsModalOpen(true);
-        }}
-      >
+      <SessionCard className="card">
         <Title>
-          {title.trim()}
+          {title.trim()} id:{id}
           <StatusChip>{status.toLowerCase()}</StatusChip>
         </Title>
         <DateTime>{moment(date).format("MMMM D, yyyy hh:mm a")}</DateTime>
@@ -142,7 +108,8 @@ export const Session = (props) => {
         <p>{type}</p>
         <Button
           onClick={() => {
-            deleteSession(id);
+            deleteSession({ variables: { deleteSessionId: id } });
+            refetch();
           }}
         >
           <RiDeleteBin6Line color="#333" />

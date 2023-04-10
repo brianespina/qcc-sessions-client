@@ -65,7 +65,7 @@ export default function SessionGrid({
 }) {
   const [isAddMode, setIsAddMode] = useState(false);
 
-  const { loading, error, data } = useQuery(GET_SESSIONS, {
+  const { loading, error, data, refetch } = useQuery(GET_SESSIONS, {
     variables: {
       status: display,
     },
@@ -81,7 +81,7 @@ export default function SessionGrid({
     <Container>
       <Sessions>
         {sessions?.map((session, i) => {
-          return <Session key={i} {...session} />;
+          return <Session key={i} {...session} refetch={refetch} />;
         })}
       </Sessions>
 
