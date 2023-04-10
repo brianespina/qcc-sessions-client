@@ -41,32 +41,43 @@ const modalStyles = {
 };
 
 const GET_SESSIONS = gql`
-  query GetSessions {
-    sessions {
+  query GetSessions($status: String!) {
+    sessions(status: $status) {
       date
       id
       notes
       status
       title
       type
+      attendees {
+        id
+      }
     }
   }
 `;
 
 export default function SessionGrid({
   showControl = true,
-  display = "current",
+  display = "active",
 }) {
   const [isAddMode, setIsAddMode] = useState(false);
 
-  const { loading, error, data } = useQuery(GET_SESSIONS);
+  const { loading, error, data } = useQuery(GET_SESSIONS, {
+    variables: {
+      status: display,
+    },
+  });
 
   if (loading) return <>Loading</>;
+  if (error) {
+    console.log(error);
+    return <>error</>;
+  }
   const { sessions } = data;
   return (
     <Container>
       <Sessions>
-        {sessions.map((session, i) => {
+        {sessions?.map((session, i) => {
           return <Session key={i} {...session} />;
         })}
       </Sessions>

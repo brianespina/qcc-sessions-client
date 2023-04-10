@@ -36,22 +36,10 @@ const router = createBrowserRouter([
       },
       {
         path: "/sessions",
-        children: [
-          {
-            index: true,
-            element: <Sessions />,
-            handle: {
-              title: "Sessions",
-            },
-          },
-          {
-            path: "archive",
-            element: <SessionArchive />,
-            handle: {
-              title: "Archived Sessions",
-            },
-          },
-        ],
+        element: <Sessions />,
+        handle: {
+          title: "Sessions",
+        },
       },
       {
         path: "/lessons",

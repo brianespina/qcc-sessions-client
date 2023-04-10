@@ -89,11 +89,6 @@ export default function Root() {
           </li>
           <li>
             <Link to="/sessions">Sessions</Link>
-            <ul>
-              <li>
-                <Link to="/sessions/archive">Session Archive</Link>
-              </li>
-            </ul>
           </li>
           <li>
             <Link to="/lessons">Lessons</Link>
