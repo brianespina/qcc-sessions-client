@@ -139,7 +139,6 @@ export const Session = (props) => {
         </Title>
         <DateTime>{moment(date).format("MMMM D, yyyy hh:mm a")}</DateTime>
         <p>{type}</p>
-        <p>{notes}</p>
         <Button
           onClick={() => {
             deleteSession(id);

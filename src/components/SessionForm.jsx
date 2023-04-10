@@ -7,7 +7,6 @@ import styled from "styled-components";
 const initialSessionFormData = {
   title: "",
   date: Date.now(),
-  attendees: [1, 2, 3, 4, 5],
   status: "active",
   type: "training",
   handler: 2,

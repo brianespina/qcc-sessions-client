@@ -9,6 +9,7 @@ import BasicButton from "./BasicButton";
 import Modal from "react-modal";
 import ButtonRow from "./ButtonRow";
 import Chip from "./Chip";
+import { useQuery, gql } from "@apollo/client";
 
 const Sessions = styled.div`
   display: grid;
@@ -38,95 +39,36 @@ const modalStyles = {
     background: "transparent",
   },
 };
+
+const GET_SESSIONS = gql`
+  query GetSessions {
+    sessions {
+      date
+      id
+      notes
+      status
+      title
+      type
+    }
+  }
+`;
+
 export default function SessionGrid({
   showControl = true,
   display = "current",
 }) {
-  const [sessions, setSessions] = useState([]);
   const [isAddMode, setIsAddMode] = useState(false);
 
-  const fetchSessions = async () => {
-    if (display === "current") {
-      const response = await axios
-        .get("http://localhost:3000/api/v1/sessions-current")
-        .catch((error) => {
-          console.log(error.toJSON());
-        });
-      setSessions(response.data);
-      return;
-    }
+  const { loading, error, data } = useQuery(GET_SESSIONS);
 
-    if (display === "archive") {
-      const response = await axios.get(
-        "http://localhost:3000/api/v1/sessions-archive"
-      );
-      setSessions(response.data);
-    }
-  };
-
-  const deleteSession = async (id) => {
-    const response = await axios.delete(
-      `http://localhost:3000/api/v1/sessions/${id}`
-    );
-    fetchSessions();
-  };
-
-  const editSession = async (e, sessionData) => {
-    e.preventDefault();
-    const response = await axios.put(
-      `http://localhost:3000/api/v1/sessions/${sessionData.id}`,
-      sessionData
-    );
-    fetchSessions();
-  };
-
-  const addSession = async (e, sessionData) => {
-    e.preventDefault();
-    let response = await axios.post(
-      "http://localhost:3000/api/v1/sessions",
-      sessionData
-    );
-    setIsAddMode(false);
-    fetchSessions();
-  };
-
-  useEffect(() => {
-    fetchSessions();
-  }, []);
+  if (loading) return <>Loading</>;
+  const { sessions } = data;
   return (
     <Container>
-      {showControl && (
-        <ButtonRow>
-          <BasicButton
-            onClick={() => {
-              setIsAddMode(true);
-            }}
-            iconPre={<HiPlus />}
-          >
-            Create Session
-          </BasicButton>
-          <BasicButton>Bulk Action</BasicButton>
-        </ButtonRow>
-      )}
-      <Filters>
-        Filter:
-        <div>
-          <Chip>Training</Chip>
-          <Chip>General Assembly</Chip>
-        </div>
-      </Filters>
       <Sessions>
-        {sessions &&
-          sessions.map((session, i) => {
-            return (
-              <Session
-                key={i}
-                {...session}
-                deleteSession={deleteSession}
-                editSession={editSession}
-              />
-            );
-          })}
+        {sessions.map((session, i) => {
+          return <Session key={i} {...session} />;
+        })}
       </Sessions>
 
       <Modal
@@ -137,7 +79,6 @@ export default function SessionGrid({
         onRequestClose={() => setIsAddMode(false)}
         style={modalStyles}
       >
-        <SessionForm handleSubmit={addSession} />
         <button onClick={() => setIsAddMode(false)}>Close</button>
       </Modal>
     </Container>
