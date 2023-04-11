@@ -38,12 +38,12 @@ const SessionForm = ({
 }) => {
   const [sessionData, setSessionData] = useState(data);
 
-  useEffect(() => {
-    setSessionData({
-      ...data,
-      date: moment(data.date).format(),
-    });
-  }, [data]);
+  // useEffect(() => {
+  //   setSessionData({
+  //     ...data,
+  //     date: moment(data.date).format(),
+  //   });
+  // }, [data]);
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -74,14 +74,13 @@ const SessionForm = ({
           onChange={(date) => {
             setSessionData({
               ...sessionData,
-              date: moment(date).format(),
+              date: moment(date).format("YYYY-MM-DD HH:mm:ss"),
             });
           }}
           showTimeSelect
-          timeFormat="HH:mm"
           timeIntervals={15}
           timeCaption="time"
-          dateFormat="MMMM d, yyyy h:mm aa"
+          dateFormat="MMMM d, yyyy h:mm a"
         />
 
         <select

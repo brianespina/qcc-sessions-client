@@ -115,6 +115,7 @@ export const Session = (props) => {
           <RiDeleteBin6Line color="#333" />
         </Button>
       </SessionCard>
+      <SessionForm data={props} />
     </>
   );
 };
