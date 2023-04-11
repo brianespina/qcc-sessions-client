@@ -9,7 +9,7 @@ import BasicButton from "./BasicButton";
 import Modal from "react-modal";
 import ButtonRow from "./ButtonRow";
 import Chip from "./Chip";
-import { useQuery, gql } from "@apollo/client";
+import { useQuery, gql, useLazyQuery } from "@apollo/client";
 
 const Sessions = styled.div`
   display: grid;
@@ -69,6 +69,10 @@ export default function SessionGrid({
     variables: {
       status: display,
     },
+  });
+
+  useEffect(() => {
+    refetch();
   });
 
   if (loading) return <>Loading</>;

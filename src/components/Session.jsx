@@ -103,6 +103,7 @@ export const Session = (props) => {
           {title.trim()} id:{id}
           <StatusChip>{status.toLowerCase()}</StatusChip>
         </Title>
+        {date}
         <DateTime>{moment(date).format("MMMM D, yyyy hh:mm a")}</DateTime>
         <p>Attending: {attendees ? attendees.length : 0}</p>
         <p>{type}</p>
@@ -115,7 +116,19 @@ export const Session = (props) => {
           <RiDeleteBin6Line color="#333" />
         </Button>
       </SessionCard>
-      <SessionForm data={props} />
+      <SessionForm
+        data={{
+          id,
+          title,
+          date,
+          attendees,
+          status,
+          type,
+          handler,
+          notes,
+        }}
+        refetch={refetch}
+      />
     </>
   );
 };

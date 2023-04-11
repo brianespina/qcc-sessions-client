@@ -3,6 +3,7 @@ import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import styled from "styled-components";
+import { useMutation, gql } from "@apollo/client";
 
 const initialSessionFormData = {
   title: "",
@@ -11,6 +12,7 @@ const initialSessionFormData = {
   type: "training",
   handler: 2,
   notes: "",
+  attendees: [1, 2, 3],
 };
 
 const FormWrap = styled.div`
@@ -31,19 +33,28 @@ const FormWrap = styled.div`
   }
 `;
 
+const UPDATE_SESSION = gql`
+  mutation ($session: SessionInput!) {
+    updateSession(session: $session)
+  }
+`;
+
 const SessionForm = ({
   data = initialSessionFormData,
-  handleSubmit,
   mode = "add",
+  refetch,
 }) => {
   const [sessionData, setSessionData] = useState(data);
+  const [updateSessionFN, { isSuccess }] = useMutation(UPDATE_SESSION);
 
-  // useEffect(() => {
-  //   setSessionData({
-  //     ...data,
-  //     date: moment(data.date).format(),
-  //   });
-  // }, [data]);
+  useEffect(() => {
+    setSessionData({
+      ...data,
+      attendees: [1, 2, 3],
+      handler: 1,
+      date: moment(data.date).format(),
+    });
+  }, [data]);
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -54,13 +65,21 @@ const SessionForm = ({
     });
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(sessionData);
+    await updateSessionFN({
+      variables: {
+        type: "SessionInput",
+        session: sessionData,
+      },
+    });
+    refetch();
+  };
+
   return (
     <FormWrap>
-      <form
-        onSubmit={(e) => {
-          handleSubmit(e, sessionData);
-        }}
-      >
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
           name="title"
@@ -74,7 +93,7 @@ const SessionForm = ({
           onChange={(date) => {
             setSessionData({
               ...sessionData,
-              date: moment(date).format("YYYY-MM-DD HH:mm:ss"),
+              date: moment(date).format(),
             });
           }}
           showTimeSelect
