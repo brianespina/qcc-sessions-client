@@ -10,9 +10,9 @@ const initialSessionFormData = {
   date: Date.now(),
   status: "active",
   type: "training",
-  handler: 2,
+  handler: null,
   notes: "",
-  attendees: [1, 2, 3],
+  attendees: [],
 };
 
 const FormWrap = styled.div`
@@ -50,8 +50,6 @@ const SessionForm = ({
   useEffect(() => {
     setSessionData({
       ...data,
-      attendees: [1, 2, 3],
-      handler: 1,
       date: moment(data.date).format(),
     });
   }, [data]);
@@ -67,11 +65,17 @@ const SessionForm = ({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(sessionData);
+    const formData = {
+      ...sessionData,
+      attendees: [1, 2, 3],
+      handler: 1,
+    };
+
+    console.log(formData);
     await updateSessionFN({
       variables: {
         type: "SessionInput",
-        session: sessionData,
+        session: formData,
       },
     });
     refetch();

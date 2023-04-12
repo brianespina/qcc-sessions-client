@@ -50,10 +50,9 @@ const GET_SESSIONS = gql`
       title
       type
       attendees {
-        id
-        name
-        first_name
-        last_name
+        members {
+          id
+        }
       }
     }
   }

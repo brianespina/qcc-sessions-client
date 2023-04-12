@@ -105,7 +105,7 @@ export const Session = (props) => {
         </Title>
         {date}
         <DateTime>{moment(date).format("MMMM D, yyyy hh:mm a")}</DateTime>
-        <p>Attending: {attendees ? attendees.length : 0}</p>
+        <p>Attending: {attendees ? attendees.members.length : 0}</p>
         <p>{type}</p>
         <Button
           onClick={() => {

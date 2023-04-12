@@ -1,7 +1,7 @@
 export default function Member(props) {
   const { name, id, status, attended } = props;
   return (
-    <div>
+    <div style={{ marginBottom: "30px" }}>
       <p>
         {name} id:{id}
       </p>
