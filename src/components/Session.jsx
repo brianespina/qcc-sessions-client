@@ -86,19 +86,18 @@ export const Session = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
-  const handleEditSubmit = (e, sessionData) => {
-    editSession(e, sessionData);
-    setIsModalOpen(false);
-  };
-
   const closeModal = () => {
-    setIsEdit(false);
     setIsModalOpen(false);
   };
 
   return (
     <>
-      <SessionCard className="card">
+      <SessionCard
+        className="card"
+        onClick={() => {
+          setIsModalOpen(true);
+        }}
+      >
         <Title>
           {title.trim()} id:{id}
           <StatusChip>{status.toLowerCase()}</StatusChip>
@@ -116,19 +115,50 @@ export const Session = (props) => {
           <RiDeleteBin6Line color="#333" />
         </Button>
       </SessionCard>
-      <SessionForm
-        data={{
-          id,
-          title,
-          date,
-          attendees,
-          status,
-          type,
-          handler,
-          notes,
-        }}
-        refetch={refetch}
-      />
+
+      <Modal
+        appElement={document.getElementById("root")}
+        isOpen={isModalOpen}
+        shouldCloseOnOverlayClick={true}
+        shouldCloseOnEsc={true}
+        onRequestClose={() => setIsModalOpen(false)}
+        style={modalStyles}
+      >
+        {isEdit ? (
+          <SessionForm
+            data={{
+              id,
+              title,
+              date,
+              status,
+              type,
+              handler,
+              notes,
+            }}
+            closeModal={closeModal}
+            refetch={refetch}
+          />
+        ) : (
+          <SessionDetails
+            data={{ id, title, date, attendees, status, type, handler, notes }}
+          />
+        )}
+        <button
+          onClick={() => {
+            setIsEdit(!isEdit);
+          }}
+        >
+          {isEdit ? "Cancel" : "Edit"}
+        </button>
+        <button
+          onClick={() => {
+            setIsModalOpen(false);
+            setIsEdit(false);
+          }}
+        >
+          Close
+        </button>
+      </Modal>
     </>
   );
 };

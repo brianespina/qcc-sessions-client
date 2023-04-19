@@ -12,7 +12,6 @@ const initialSessionFormData = {
   type: "training",
   handler: null,
   notes: "",
-  attendees: [],
 };
 
 const FormWrap = styled.div`
@@ -67,11 +66,9 @@ const SessionForm = ({
     e.preventDefault();
     const formData = {
       ...sessionData,
-      attendees: [1, 2, 3],
       handler: 1,
     };
 
-    console.log(formData);
     await updateSessionFN({
       variables: {
         type: "SessionInput",

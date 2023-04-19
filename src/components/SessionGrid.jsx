@@ -52,6 +52,7 @@ const GET_SESSIONS = gql`
       attendees {
         members {
           id
+          first_name
         }
       }
     }
@@ -62,7 +63,7 @@ export default function SessionGrid({
   showControl = true,
   display = "active",
 }) {
-  const [isAddMode, setIsAddMode] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const { loading, error, data, refetch } = useQuery(GET_SESSIONS, {
     variables: {
@@ -89,14 +90,13 @@ export default function SessionGrid({
       </Sessions>
 
       <Modal
-        appElement={document.getElementById("root")}
-        isOpen={isAddMode}
+        isOpen={modalIsOpen}
         shouldCloseOnOverlayClick={true}
         shouldCloseOnEsc={true}
-        onRequestClose={() => setIsAddMode(false)}
+        onRequestClose={() => setModalIsOpen(false)}
         style={modalStyles}
       >
-        <button onClick={() => setIsAddMode(false)}>Close</button>
+        <button onClick={() => setModalIsOpen(false)}>Close</button>
       </Modal>
     </Container>
   );

@@ -10,19 +10,6 @@ const SessionDetailsWrap = styled.div`
 `;
 
 export default function SessionDetails({ data }) {
-  const [attendees, setAttendees] = useState([]);
-
-  const fetchAttendees = async () => {
-    const response = await axios
-      .get(`http://localhost:3000/api/v1/attendees/${data.id}`)
-      .catch((error) => {
-        console.log(error.toJSON());
-      });
-    setAttendees(response?.data);
-  };
-  useEffect(() => {
-    fetchAttendees();
-  });
   return (
     <SessionDetailsWrap>
       <div>
@@ -36,7 +23,7 @@ export default function SessionDetails({ data }) {
         {moment(data.date).format("h:mm a")}
       </div>
       <div>
-        {attendees.map((member, index) => (
+        {data.attendees?.members.map((member, index) => (
           <span key={index}>{member.first_name} </span>
         ))}
       </div>
