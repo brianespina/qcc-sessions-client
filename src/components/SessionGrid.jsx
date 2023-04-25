@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import styled from "styled-components";
 import Session from "./Session";
 import SessionForm from "./SessionForm";
@@ -9,7 +8,8 @@ import BasicButton from "./BasicButton";
 import Modal from "react-modal";
 import ButtonRow from "./ButtonRow";
 import Chip from "./Chip";
-import { useQuery, gql, useLazyQuery } from "@apollo/client";
+import {db} from "../firebase/firebase"
+import { collection, query, getDocs  } from "firebase/firestore";
 
 const Sessions = styled.div`
   display: grid;
@@ -40,52 +40,41 @@ const modalStyles = {
   },
 };
 
-const GET_SESSIONS = gql`
-  query GetSessions($status: String) {
-    sessions(status: $status) {
-      date
-      id
-      notes
-      status
-      title
-      type
-      attendees {
-        members {
-          id
-          first_name
-        }
-      }
-    }
-  }
-`;
 
 export default function SessionGrid({
   showControl = true,
   display = "active",
 }) {
+
+  let [sessions, setSessions] = useState([])
+
+  async function  getSessions(){
+    let result = []
+    const q = query(collection(db, "sessions"));
+    const querySnapshot = await getDocs(q);
+ 
+    querySnapshot.forEach((doc) => {
+      let data = doc.data();
+      result.push({
+        ...data,
+        id: doc.id,
+        date: data.date.toDate()
+      });
+    });
+    setSessions(result)
+  }
+  
+  useEffect(()=>{
+    getSessions();
+  });
+
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  const { loading, error, data, refetch } = useQuery(GET_SESSIONS, {
-    variables: {
-      status: display,
-    },
-  });
-
-  useEffect(() => {
-    refetch();
-  });
-
-  if (loading) return <>Loading</>;
-  if (error) {
-    console.log(error);
-    return <>error</>;
-  }
-  const { sessions } = data;
   return (
     <Container>
       <Sessions>
         {sessions?.map((session, i) => {
-          return <Session key={i} {...session} refetch={refetch} />;
+          return <Session key={i} {...session} />;
         })}
       </Sessions>
 

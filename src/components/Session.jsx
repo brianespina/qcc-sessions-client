@@ -5,7 +5,6 @@ import { RiDeleteBin6Line, RiEdit2Line } from "react-icons/ri";
 import moment from "moment";
 import Modal from "react-modal";
 import SessionDetails from "./SessionDetails";
-import { useMutation, gql } from "@apollo/client";
 
 //Styled Components
 const Title = styled.h2`
@@ -71,17 +70,10 @@ const modalStyles = {
   },
 };
 
-const DELETE_SESSION = gql`
-  mutation Session($deleteSessionId: ID!) {
-    deleteSession(id: $deleteSessionId)
-  }
-`;
 
 export const Session = (props) => {
   const { id, title, date, attendees, status, type, handler, notes, refetch } =
     props;
-
-  const [deleteSession] = useMutation(DELETE_SESSION);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
@@ -102,9 +94,8 @@ export const Session = (props) => {
           {title.trim()} id:{id}
           <StatusChip>{status.toLowerCase()}</StatusChip>
         </Title>
-        {date}
         <DateTime>{moment(date).format("MMMM D, yyyy hh:mm a")}</DateTime>
-        <p>Attending: {attendees ? attendees.members.length : 0}</p>
+        <p>Attending: {attendees ? attendees.length : 0}</p>
         <p>{type}</p>
         <Button
           onClick={() => {
