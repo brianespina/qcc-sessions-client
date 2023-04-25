@@ -27,7 +27,7 @@ export default function LessonGrid() {
                 <h2>
                     {lesson.title} {lesson.id}
                 </h2>
-                {lesson.content.map(row => <p>
+                {lesson.content.map((row, idx) => <p key={idx}>
                     {row}
                 </p>)}
             </div>

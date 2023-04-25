@@ -72,7 +72,7 @@ const modalStyles = {
 
 
 export const Session = (props) => {
-  const { id, title, date, attendees, status, type, handler, notes, refetch } =
+  const { id, title, date, attendees, status, type, handler, notes, lesson } =
     props;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -91,7 +91,7 @@ export const Session = (props) => {
         }}
       >
         <Title>
-          {title.trim()} id:{id}
+          {title.trim()}
           <StatusChip>{status.toLowerCase()}</StatusChip>
         </Title>
         <DateTime>{moment(date).format("MMMM D, yyyy hh:mm a")}</DateTime>
@@ -130,7 +130,7 @@ export const Session = (props) => {
           />
         ) : (
           <SessionDetails
-            data={{ id, title, date, attendees, status, type, handler, notes }}
+            data={{ id, title, date, attendees, status, type, handler, notes, lesson }}
           />
         )}
         <button

@@ -87,9 +87,9 @@ export default function Root() {
           <li>
             <Link to="/">Dashboard</Link>
           </li>
-          {/* <li>
+          <li>
             <Link to="/sessions">Sessions</Link>
-          </li> */}
+          </li>
           <li>
             <Link to="/lessons">Lessons</Link>
           </li>

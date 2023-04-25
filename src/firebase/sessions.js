@@ -17,6 +17,14 @@ export const getSessions = async () => {
     return result;
 }
 
+export const getSessionLesson = async (lessonID) => {
+
+    const lessonRef = doc(db, "lessons", lessonID);
+    let lesson = await getDoc(lessonRef);
+
+    return lesson.data()
+}
+
 export const getSessionAttendees = async (refs) => {
     const memPromises = refs.map(ref => {
         const docref = doc(db, "members", ref);

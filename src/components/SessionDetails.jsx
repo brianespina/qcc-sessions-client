@@ -1,7 +1,7 @@
 import moment from "moment";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import { getSessionAttendees } from '../firebase/sessions';
+import { getSessionLesson } from '../firebase/sessions';
 
 const SessionDetailsWrap = styled.div`
   display: flex;
@@ -12,11 +12,36 @@ const SessionDetailsWrap = styled.div`
 export default function SessionDetails({ data }) {
 
 
+  let [lesson, setLesson] = useState({});
+  let [isLoading, setIsLoading] = useState(true)
+
+
+  async function fetchSessions(id) {
+    setIsLoading(true);
+    try {
+      let data = await getSessionLesson(id);
+      setLesson(data)
+    } catch (error) {
+      console.error(error);
+    }
+    setIsLoading(false);
+  }
+
+  useEffect(() => {
+    fetchSessions(data.lesson);
+  }, []);
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  // handle error checking
+
   return (
     <SessionDetailsWrap>
       <div>
         <h2>
-          {data.title} id:{data.id}
+          {data.title}
         </h2>
       </div>
       <div>
@@ -27,6 +52,9 @@ export default function SessionDetails({ data }) {
       <div>{data.status}</div>
       <div>{data.type}</div>
       <div>{data.notes}</div>
+      <div>Lesson: </div>
+      <div>{lesson?.title}</div>
+      <div>{lesson?.content?.map(row => <p>{row}</p>)}</div>
     </SessionDetailsWrap>
   );
 
