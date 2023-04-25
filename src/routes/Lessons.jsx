@@ -1,3 +1,7 @@
+import LessonGrid from "../components/lessons/LessonGrid";
+
 export default function Lessons() {
-  return <div>Lessons</div>;
+  return <div>
+    <LessonGrid />
+  </div>;
 }

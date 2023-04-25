@@ -8,7 +8,7 @@ import BasicButton from "./BasicButton";
 import Modal from "react-modal";
 import ButtonRow from "./ButtonRow";
 import Chip from "./Chip";
-import {getSessions} from "../firebase/sessions"
+import { getSessions } from "../firebase/sessions"
 
 const Sessions = styled.div`
   display: grid;
@@ -47,15 +47,15 @@ export default function SessionGrid({
 
   let [sessions, setSessions] = useState([])
 
-  
-  async function fetchSessions(){
-    let data =  await getSessions();
+
+  async function fetchSessions() {
+    let data = await getSessions();
     setSessions(data);
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchSessions();
-  });
+  }, []);
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
 

@@ -95,7 +95,6 @@ export const Session = (props) => {
           <StatusChip>{status.toLowerCase()}</StatusChip>
         </Title>
         <DateTime>{moment(date).format("MMMM D, yyyy hh:mm a")}</DateTime>
-        <p>Attending: {attendees ? attendees.length : 0}</p>
         <p>{type}</p>
         <Button
           onClick={() => {

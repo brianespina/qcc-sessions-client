@@ -87,15 +87,15 @@ export default function Root() {
           <li>
             <Link to="/">Dashboard</Link>
           </li>
-          <li>
+          {/* <li>
             <Link to="/sessions">Sessions</Link>
-          </li>
+          </li> */}
           <li>
             <Link to="/lessons">Lessons</Link>
           </li>
-          <li>
+          {/* <li>
             <Link to="/members">Members</Link>
-          </li>
+          </li> */}
         </Menu>
         <CloseSidebar onClick={() => setSidebarIsActive(false)} />
       </SideBar>

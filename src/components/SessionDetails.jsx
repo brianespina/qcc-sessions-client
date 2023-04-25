@@ -1,7 +1,7 @@
 import moment from "moment";
 import styled from "styled-components";
-import axios from "axios";
 import { useState, useEffect } from "react";
+import { getSessionAttendees } from '../firebase/sessions';
 
 const SessionDetailsWrap = styled.div`
   display: flex;
@@ -10,6 +10,8 @@ const SessionDetailsWrap = styled.div`
 `;
 
 export default function SessionDetails({ data }) {
+
+
   return (
     <SessionDetailsWrap>
       <div>
@@ -22,10 +24,10 @@ export default function SessionDetails({ data }) {
         <br />
         {moment(data.date).format("h:mm a")}
       </div>
-
       <div>{data.status}</div>
       <div>{data.type}</div>
       <div>{data.notes}</div>
     </SessionDetailsWrap>
   );
+
 }
