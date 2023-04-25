@@ -22,11 +22,7 @@ export default function SessionDetails({ data }) {
         <br />
         {moment(data.date).format("h:mm a")}
       </div>
-      <div>
-        {data.attendees?.members.map((member, index) => (
-          <span key={index}>{member.first_name} </span>
-        ))}
-      </div>
+
       <div>{data.status}</div>
       <div>{data.type}</div>
       <div>{data.notes}</div>
