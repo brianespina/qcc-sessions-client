@@ -8,18 +8,9 @@ import Lessons from "./routes/Lessons";
 import Members from "./routes/Members";
 import NotFound from "./routes/NotFound";
 import SessionArchive from "./routes/SessionArchive";
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  gql,
-} from "@apollo/client";
 import "./index.css";
 
-const client = new ApolloClient({
-  uri: "http://localhost:3000/graphql",
-  cache: new InMemoryCache(),
-});
+
 
 const router = createBrowserRouter([
   {
@@ -60,7 +51,5 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <ApolloProvider client={client}>
-    <RouterProvider router={router} />
-  </ApolloProvider>
+  <RouterProvider router={router} />
 );

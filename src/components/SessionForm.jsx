@@ -3,7 +3,6 @@ import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import styled from "styled-components";
-import { useMutation, gql } from "@apollo/client";
 
 const initialSessionFormData = {
   title: "",
@@ -32,11 +31,6 @@ const FormWrap = styled.div`
   }
 `;
 
-const UPDATE_SESSION = gql`
-  mutation ($session: SessionInput!) {
-    updateSession(session: $session)
-  }
-`;
 
 const SessionForm = ({
   data = initialSessionFormData,
@@ -44,7 +38,6 @@ const SessionForm = ({
   refetch,
 }) => {
   const [sessionData, setSessionData] = useState(data);
-  const [updateSessionFN, { isSuccess }] = useMutation(UPDATE_SESSION);
 
   useEffect(() => {
     setSessionData({

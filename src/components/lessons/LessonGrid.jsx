@@ -22,14 +22,15 @@ export default function LessonGrid() {
     }
 
     return <>
-        {lessons && lessons.map(lesson => <>
-            <h2>
-                {lesson.title} {lesson.id}
-            </h2>
-            {lesson.content.map(row => <p>
-                {row}
-            </p>)}
-        </>
+        {lessons && lessons.map((lesson) =>
+            <div key={lesson.id}>
+                <h2>
+                    {lesson.title} {lesson.id}
+                </h2>
+                {lesson.content.map(row => <p>
+                    {row}
+                </p>)}
+            </div>
         )}
     </>;
 }
